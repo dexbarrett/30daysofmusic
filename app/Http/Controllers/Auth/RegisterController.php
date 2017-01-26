@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace MusicChallenge\Http\Controllers\Auth;
 
-use App\User;
+use MusicChallenge\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use MusicChallenge\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller

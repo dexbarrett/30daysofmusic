@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace MusicChallenge\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

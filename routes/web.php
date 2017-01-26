@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', 'LoginController@showLoginPage')
+->middleware('guest');
+
+Route::get('logout', 'LoginController@logout');
+ 
+Route::get('login/{provider}', 'LoginController@auth')
+    ->where(['provider' => 'twitter']);
+ 
+Route::get('login/{provider}/callback', 'LoginController@login')
+    ->where(['provider' => 'twitter']);
+
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function() {
+    Route::get('challenge', 'UserController@showDashboard');
 });

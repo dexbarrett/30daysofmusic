@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace MusicChallenge\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use MusicChallenge\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
