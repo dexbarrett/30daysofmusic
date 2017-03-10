@@ -3,6 +3,8 @@ namespace MusicChallenge;
 
 use Exception;
 use Socialite;
+use MusicChallenge\User;
+use MusicChallenge\Credentials;
 use MusicChallenge\Exceptions\SocialAuthException;
 
 class LoginUser
@@ -17,11 +19,26 @@ class LoginUser
         try {
 
             $oauthUserInfo = Socialite::driver($providerName)->user();
-            $user = User::firstOrNew(['email' => $oauthUserInfo->getEmail()]);
-            $user->name = $oauthUserInfo->getName();
-            $user->save();
+            
+            $credentials = Credentials::where('twitter_id', $oauthUserInfo->getId())
+                                ->first();
 
-            auth()->login($user);
+            if (is_null($credentials)) {
+                $user = new User;
+                $user->name = $oauthUserInfo->getName();
+                $user->email = $oauthUserInfo->getEmail();
+                $user->save();
+
+                $credentials = new Credentials;
+                $credentials->twitter_id = $oauthUserInfo->getId();
+                $credentials->user_id = $user->id;
+            }
+
+            $credentials->twitter_token = $oauthUserInfo->token;
+            $credentials->twitter_token_secret = $oauthUserInfo->tokenSecret;
+            $credentials->save();
+            
+            auth()->login($credentials->user);
 
         } catch (Exception $e) {
             throw new SocialAuthException(

@@ -22,6 +22,6 @@ Route::get('login/{provider}', 'LoginController@auth')
 Route::get('login/{provider}/callback', 'LoginController@login')
     ->where(['provider' => 'twitter']);
 
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'me', 'middleware' => 'auth'], function() {
     Route::get('challenge', 'UserController@showDashboard');
 });
